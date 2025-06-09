@@ -1,0 +1,90 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.container {
+  width: calc(20 * 128px);
+  height: calc(20 * 128px);
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+#character-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+#character {
+  width: 90px;
+  height: 90px;
+  background-image: url('../img/green_character.png');
+  background-position: -19px -19px;
+  position: relative;
+}
+
+.hands {
+  width: 40px;
+  height: 40px;
+  background-image: url('../img/green_hand.png');
+  background-repeat: no-repeat;
+  background-position: -45px -45px;
+  position: absolute;
+}
+
+.hands-ani {
+  animation: bob-up-down 0.5s infinite ease-in-out;
+}
+
+#left-hand {
+  top: 0px;
+  left: -20px;
+}
+
+#right-hand {
+  top: 0px;
+  right: -20px;
+  animation-delay: 0.25s;
+}
+
+@keyframes bob-up-down {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(5px);
+    /* Adjust amount as needed */
+  }
+}
+
+#map {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+}
+
+#map .water {
+  background-image: url('../img/environment/water.png');
+  width: 128px;
+  height: 128px;
+}
+
+#map .grass {
+  background-image: url('../img/environment/grass.png');
+  width: 128px;
+  height: 128px;
+}
+
