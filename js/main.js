@@ -1,7 +1,12 @@
 const character = document.getElementById('character-wrapper');
 const hands = document.querySelectorAll('.hands');
+const leftHand = document.getElementById('left-hand');
+const rightHand = document.getElementById('right-hand');
 const map = document.getElementById('map');
 const popUp = document.querySelector('.pop-menu');
+const items = document.getElementById('items');
+const item2 = document.getElementById('items2');
+
 
 
 let x = 0;
@@ -22,7 +27,6 @@ mapWidth = mapHeight = length
 
 map.style.width = mapWidth * 128;
 map.style.height = mapHeight * 128;
-
 
 function c(log) {
   const [label] = Object.key(log)
@@ -104,7 +108,7 @@ function move() {
     console.log('y up');
     window.scrollBy(0, 10);
   }
-  
+
   prevY = y;
 
   requestAnimationFrame(move);
@@ -129,14 +133,14 @@ for (let i = 0; i < mapWidth; i++) {
 }
 
 window.addEventListener('beforeunload', () => {
-  window.scrollTo(0 , 0)
+  window.scrollTo(0, 0)
 });
 
 document.addEventListener('keydown', (e) => {
   if (e.key === ' ') {
     e.preventDefault();
     console.log('Spacebar Pressed');
-    popUp.style.display = 'block'; 
+    popUp.style.display = 'block';
 
     charRect = character.getBoundingClientRect();
 
@@ -146,4 +150,28 @@ document.addEventListener('keydown', (e) => {
     popUp.style.transform = `translate(${charX + 100}px, ${charY}px)`;
 
   }
+})
+
+document.addEventListener('click', (e) => {
+
+  if (e.target.classList.contains('item-1')) {
+    console.log('1');
+    items.classList.add('bow');
+    item2.classList.add('arrow');
+    leftHand.style.left = '25px';
+    leftHand.style.top = '-30px';
+    rightHand.style.right = '10px';
+    rightHand.style.top = '-5px';
+  };
+
+  if (e.target.classList.contains('item-2')) {
+    console.log('2'); 
+    items.classList.add('sword');
+  };
+
+  if (e.target.classList.contains('item-3')) {
+    console.log('3');
+    items.classList.add('axe');
+  };
+
 })

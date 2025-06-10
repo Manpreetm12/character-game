@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 html,
 body {
   margin: 0;
@@ -28,19 +33,21 @@ body::-webkit-scrollbar {
 }
 
 #character {
-  width: 90px;
-  height: 90px;
+  width:80px;
+  height: 80px;
   background-image: url('../img/green_character.png');
-  background-position: -19px -19px;
+  background-position: center;
+  background-size: cover;
   position: relative;
 }
 
 .hands {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   background-image: url('../img/green_hand.png');
+  background-position: center;
   background-repeat: no-repeat;
-  background-position: -45px -45px;
+  background-size: 100px;
   position: absolute;
 }
 
@@ -50,13 +57,16 @@ body::-webkit-scrollbar {
 
 #left-hand {
   top: 0px;
-  left: -20px;
+  left: -6px;
+  top: 6px;
+  z-index: 1;
 }
 
 #right-hand {
-  top: 0px;
-  right: -20px;
+  top: 6px;
+  right: -6px;
   animation-delay: 0.25s;
+  z-index: 1;
 }
 
 @keyframes bob-up-down {
@@ -98,7 +108,64 @@ body::-webkit-scrollbar {
   display: none; 
   width: 5rem;
   height: 10rem;
-  border-radius: 1px solid #000;
+  border: 1px solid #000;
+  border-radius: 10px;
   position: absolute;
-  background-color: red;
+  background-color: #ccc;
+  text-align: center;
+}
+
+#item-1 {
+  padding: 0.5rem 0;
+  border-radius: 10px 10px 0 0;
+}
+
+#item-1:hover {
+ color: #fff;
+ background-color: #000;
+ cursor: pointer;
+}
+
+#item-2 {
+  padding: 0.5rem 0;
+}
+
+#item-2:hover {
+  color: #fff;
+  background-color: #000;
+  cursor: pointer;
+}
+
+#item-3 {
+  padding: 0.7rem 0;
+  border-radius: 0 0 10px 10px;
+}
+
+#item-3:hover {
+  color: #fff;
+  background-color: #000;
+  cursor: pointer;
+}
+
+.bow {
+  background-image: url('../img/items/weapon_bow.png');
+  background-position: center;
+  background-size: cover;
+  width: 100px;
+  height: 30px;
+  transform: rotate(10deg);
+  position: absolute;
+  top: -25px;
+  left: 10px;
+}
+
+.arrow {
+  background-image: url('../img/items/weapon_arrow.png');
+  width: 20px;
+  height: 100px;
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  left: 40px;
+  top: -50px;
 }
