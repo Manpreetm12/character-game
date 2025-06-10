@@ -6,6 +6,7 @@ const map = document.getElementById('map');
 const popUp = document.querySelector('.pop-menu');
 const items = document.getElementById('items');
 const item2 = document.getElementById('items2');
+const body = document.querySelector('body')
 
 
 
@@ -90,10 +91,10 @@ function move() {
   if (x === prevX) {
     // console.log('nom')
   } else if (x < prevX && characterRect.right <= mapRect.right / 1.5) {
-    console.log('x left');
+    // console.log('x left');
     window.scrollBy(-10, 0);
   } else if (x > prevX && characterRect.left >= mapRect.left + mapRect.width * 0.2) {
-    console.log('x right');
+    // console.log('x right');
     window.scrollBy(10, 0);
   }
 
@@ -102,10 +103,10 @@ function move() {
   if (y === prevY) {
     // console.log('nom')
   } else if (y < prevY && characterRect.bottom <= mapRect.bottom / 1.5) {
-    console.log('y down');
+    // console.log('y down');
     window.scrollBy(0, -10);
   } else if (y > prevY && characterRect.top >= mapRect.top + mapRect.height * 0.15) {
-    console.log('y up');
+    // console.log('y up');
     window.scrollBy(0, 10);
   }
 
@@ -136,9 +137,14 @@ window.addEventListener('beforeunload', () => {
   window.scrollTo(0, 0)
 });
 
+let onePress = true
+
 document.addEventListener('keydown', (e) => {
   if (e.key === ' ') {
     e.preventDefault();
+  }
+
+  if (e.key === ' ' && onePress) {
     console.log('Spacebar Pressed');
     popUp.style.display = 'block';
 
@@ -149,10 +155,13 @@ document.addEventListener('keydown', (e) => {
 
     popUp.style.transform = `translate(${charX + 100}px, ${charY}px)`;
 
+    onePress = false;
   }
 })
 
-document.addEventListener('click', (e) => {
+popUp.addEventListener('click', (e) => {
+
+  popUp.style.display = 'none';
 
   if (e.target.classList.contains('item-1')) {
     console.log('1');
@@ -165,7 +174,7 @@ document.addEventListener('click', (e) => {
   };
 
   if (e.target.classList.contains('item-2')) {
-    console.log('2'); 
+    console.log('2');
     items.classList.add('sword');
   };
 
@@ -174,4 +183,61 @@ document.addEventListener('click', (e) => {
     items.classList.add('axe');
   };
 
-})
+});
+
+let firstClick = true;
+let isMouseDown = false;
+let xClient = 0;
+let yClient = 0;
+
+document.addEventListener('mousedown', (e) => {
+  if (document.querySelector('.bow')) {
+    isMouseDown = true;
+
+    xClient = e.clientX;
+    yClient = e.clientY;
+
+    items.classList.remove('bow');
+    item2.classList.remove('arrow');
+    items.classList.add('pulled');
+    rightHand.style.zIndex = -1;
+    rightHand.style.top = '10px';
+
+    const rect = item2.getBoundingClientRect();
+    document.body.appendChild(item2);
+    item2.style.position = 'fixed';
+    item2.style.left = `${rect.left}px`;
+    item2.style.top = `${rect.top}px`;
+  }
+});
+
+document.addEventListener('mouseup', (e) => {
+  if (!isMouseDown) return;
+  isMouseDown = false;
+
+  xClient = e.clientX;
+  yClient = e.clientY;
+
+  item2.style.left = `${xClient}px`;
+  item2.style.top = `${yClient}px`;
+
+  items.classList.remove('pulled');
+  items.classList.add('bow');
+  item2.classList.add('arrow');
+  rightHand.style.top = '-10px';
+  rightHand.style.zIndex = 1;
+
+  console.log(`Clicked at viewport coords: (${xClient}, ${yClient})`);
+
+  
+  setTimeout(() => {
+    items.appendChild(item2);
+    item2.style.position = 'absolute';
+    item2.style.left = '40px';
+    item2.style.top = '-50px';
+  }, 1000); 
+});
+
+
+
+

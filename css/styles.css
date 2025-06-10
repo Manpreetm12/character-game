@@ -169,3 +169,17 @@ body::-webkit-scrollbar {
   left: 40px;
   top: -50px;
 }
+
+.pulled {
+  background-image: url('../img/items/weapon_bow_arrow.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
+  transform: rotate(10deg);
+  position: absolute;
+  top: -60px;
+  left: 10px;
+  z-index: -1;
+}
