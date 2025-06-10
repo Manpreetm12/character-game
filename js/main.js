@@ -1,6 +1,7 @@
 const character = document.getElementById('character-wrapper');
 const hands = document.querySelectorAll('.hands');
 const map = document.getElementById('map');
+const popUp = document.querySelector('.pop-menu');
 
 
 let x = 0;
@@ -33,6 +34,7 @@ const keys = {};
 document.addEventListener('keydown', (e) => {
   keys[e.key.toLowerCase()] = true;
   hands.forEach(hand => hand.classList.add('hands-ani'));
+  popUp.style.display = 'none'
 });
 
 document.addEventListener('keyup', (e) => {
@@ -84,13 +86,11 @@ function move() {
   if (x === prevX) {
     // console.log('nom')
   } else if (x < prevX && characterRect.right <= mapRect.right / 1.5) {
-    console.log('x left')
-    window.scrollBy(-10, 0)
-    map.style.opacity = 1
+    console.log('x left');
+    window.scrollBy(-10, 0);
   } else if (x > prevX && characterRect.left >= mapRect.left + mapRect.width * 0.2) {
-    console.log('x right')
-    window.scrollBy(10, 0)
-    map.style.opacity = 0.5;
+    console.log('x right');
+    window.scrollBy(10, 0);
   }
 
   prevX = x;
@@ -98,15 +98,14 @@ function move() {
   if (y === prevY) {
     // console.log('nom')
   } else if (y < prevY && characterRect.bottom <= mapRect.bottom / 1.5) {
-    console.log('y down')
-    window.scrollBy(0, -10)
+    console.log('y down');
+    window.scrollBy(0, -10);
   } else if (y > prevY && characterRect.top >= mapRect.top + mapRect.height * 0.15) {
-    console.log('y up')
-    window.scrollBy(0, 10)
+    console.log('y up');
+    window.scrollBy(0, 10);
   }
   
   prevY = y;
-
 
   requestAnimationFrame(move);
 }
@@ -128,3 +127,23 @@ for (let i = 0; i < mapWidth; i++) {
     mapLanes.appendChild(environment)
   }
 }
+
+window.addEventListener('beforeunload', () => {
+  window.scrollTo(0 , 0)
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === ' ') {
+    e.preventDefault();
+    console.log('Spacebar Pressed');
+    popUp.style.display = 'block'; 
+
+    charRect = character.getBoundingClientRect();
+
+    charX = charRect.left + window.scrollX;
+    charY = charRect.top + window.scrollY;
+
+    popUp.style.transform = `translate(${charX + 100}px, ${charY}px)`;
+
+  }
+})

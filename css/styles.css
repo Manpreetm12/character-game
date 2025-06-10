@@ -19,6 +19,8 @@ body::-webkit-scrollbar {
   align-items: center; */
 }
 
+/* Character */
+
 #character-wrapper {
   position: absolute;
   left: 50%;
@@ -70,6 +72,8 @@ body::-webkit-scrollbar {
   }
 }
 
+/* Map / Tiles */
+
 #map {
   display: flex;
   justify-content: center; 
@@ -88,3 +92,13 @@ body::-webkit-scrollbar {
   height: 128px;
 }
 
+/* Modal / Popup */
+
+.pop-menu {
+  display: none; 
+  width: 5rem;
+  height: 10rem;
+  border-radius: 1px solid #000;
+  position: absolute;
+  background-color: red;
+}
