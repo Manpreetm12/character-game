@@ -24,15 +24,15 @@ const length = 20
 let mapWidth = 0;
 let mapHeight = 0;
 
+let charRect;
+let clickX = 0;
+let clickY = 0;
+
+
 mapWidth = mapHeight = length
 
 map.style.width = mapWidth * 128;
 map.style.height = mapHeight * 128;
-
-function c(log) {
-  const [label] = Object.key(log)
-  console.log(`${label}`, log[label])
-}
 
 const keys = {};
 
@@ -185,59 +185,63 @@ popUp.addEventListener('click', (e) => {
 
 });
 
-let firstClick = true;
+document.addEventListener('click', (e) => {
+  clickX = e.clientX;
+  clickY = e.clientY;
+  
+  charRect = character.getBoundingClientRect();
+
+  const charCenterX = charRect.left + charRect.width / 2;
+  const charCenterY = charRect.top + charRect.height / 2;
+
+  const angleRad = Math.atan2(clickY - charCenterY, clickX - charCenterX);
+  const angleDeg = angleRad * (180 / Math.PI);
+
+  direction = angleDeg + 90;
+  character.style.transform = `translate(${x}px, ${y}px) rotate(${direction}deg)`;
+
+  console.log(direction)
+});
+
+let canShoot = true;
 let isMouseDown = false;
-let xClient = 0;
-let yClient = 0;
 
 document.addEventListener('mousedown', (e) => {
-  if (document.querySelector('.bow')) {
-    isMouseDown = true;
+  if (!canShoot) return;
+  if (!document.querySelector('.bow')) return;
 
-    xClient = e.clientX;
-    yClient = e.clientY;
+  isMouseDown = true;
+  setTimeout(() => {
+  items.classList.remove('bow');
+  item2.classList.remove('arrow');
+  items.classList.add('pulled');
+  rightHand.style.zIndex = -1;
+  rightHand.style.top = '10px';
+  }, 200);
 
-    items.classList.remove('bow');
-    item2.classList.remove('arrow');
-    items.classList.add('pulled');
-    rightHand.style.zIndex = -1;
-    rightHand.style.top = '10px';
+  
 
-    const rect = item2.getBoundingClientRect();
-    document.body.appendChild(item2);
-    item2.style.position = 'fixed';
-    item2.style.left = `${rect.left}px`;
-    item2.style.top = `${rect.top}px`;
-  }
 });
 
 document.addEventListener('mouseup', (e) => {
   if (!isMouseDown) return;
   isMouseDown = false;
 
-  xClient = e.clientX;
-  yClient = e.clientY;
+  canShoot = false;
+  setTimeout(() => {
+    canShoot = true;
+  }, 500);
 
-  item2.style.left = `${xClient}px`;
-  item2.style.top = `${yClient}px`;
+  setTimeout(() => {
 
   items.classList.remove('pulled');
   items.classList.add('bow');
   item2.classList.add('arrow');
   rightHand.style.top = '-10px';
   rightHand.style.zIndex = 1;
+  }, 200);
 
-  console.log(`Clicked at viewport coords: (${xClient}, ${yClient})`);
-
-  
-  setTimeout(() => {
-    items.appendChild(item2);
-    item2.style.position = 'absolute';
-    item2.style.left = '40px';
-    item2.style.top = '-50px';
-  }, 1000); 
 });
-
 
 
 
